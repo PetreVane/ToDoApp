@@ -65,8 +65,42 @@ class ToDoViewController: UITableViewController {
         } else {
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         }
-    
         
+    }
+    
+    
+    @IBAction func barButtonPressed(_ sender: UIBarButtonItem) {
+        
+        // Step 1: declaring a placeholder within the scope of the method
+        var myTextField = UITextField()
+        
+        let myAlert = UIAlertController(title: "Add new item on your list", message: "", preferredStyle: .alert)
+        
+        let myAction = UIAlertAction(title: "Add item", style: .default) { (action) in
+            
+            // What will happen when the + button is pressed
+            //print ("Success")
+            
+        // Step 3: using the value of the 'global' variable within the scope of this closure
+            //print("your captured text is: \(myTextField.text!)")
+            
+            self.listElements.append(myTextField.text!)
+            self.tableView.reloadData()
+        }
+
+        myAlert.addAction(myAction)
+        
+        // Adding a textfield within the alert
+       
+        myAlert.addTextField { (myAlertTextField) in
+            myAlertTextField.placeholder = "Type in new item"
+       
+            //Step 2: capturing what the user types and storing the value into the 'global' variable, so it will be available outside the scope of this closure
+            
+            myTextField = myAlertTextField
+        }
+        // Presenting your alert to the ViewController
+        present(myAlert, animated: true, completion: nil)
         
     }
     
