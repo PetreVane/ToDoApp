@@ -14,10 +14,19 @@ class ToDoViewController: UITableViewController {
     
     var listElements = ["Grab a beer", "Grab a towel", "Wash your beard"]
     
+    // Creating a UserDefaults() object
+    let defaults = UserDefaults()
+    
     //@IBOutlet var tableView: UITableView! --> this is not needed when having an UITableViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Replacing the listElements with an updated version, retreived from UserDefaults
+        
+        if let updatedListElements = defaults.array(forKey: "myUpdatedList") {
+            listElements = updatedListElements as! [String]
+        }
 
         }
 
@@ -77,14 +86,17 @@ class ToDoViewController: UITableViewController {
         let myAlert = UIAlertController(title: "Add new item on your list", message: "", preferredStyle: .alert)
         
         let myAction = UIAlertAction(title: "Add item", style: .default) { (action) in
-            
-            // What will happen when the + button is pressed
-            //print ("Success")
+
             
         // Step 3: using the value of the 'global' variable within the scope of this closure
             //print("your captured text is: \(myTextField.text!)")
             
             self.listElements.append(myTextField.text!)
+            
+            // Saving the current state to User Defaults. Add 'self' because you're inside a closure
+            self.defaults.set(self.listElements, forKey: "myUpdatedList")
+            
+            // Reloading table view data
             self.tableView.reloadData()
         }
 
