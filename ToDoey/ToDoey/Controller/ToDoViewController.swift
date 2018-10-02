@@ -34,13 +34,10 @@ class ToDoViewController: UITableViewController {
         newItem3.title = "Have breakfast"
         listElements.append(newItem3)
         
-
-        
         // Replacing the listElements with an updated version, retreived from UserDefaults
-        
-        
+//
 //        if let updatedListElements = defaults.array(forKey: "myUpdatedList") {
-//            listElements = updatedListElements as! [String]
+//            listElements = updatedListElements as! [Item]
 //        }
 
         }
@@ -96,7 +93,7 @@ class ToDoViewController: UITableViewController {
     @IBAction func barButtonPressed(_ sender: UIBarButtonItem) {
         
         // Step 1: declaring a placeholder within the scope of the method
-        var myTextField = UITextField()
+        let myTextField = UITextField()
         
         let myAlert = UIAlertController(title: "Add new item on your list", message: "", preferredStyle: .alert)
         
@@ -106,7 +103,10 @@ class ToDoViewController: UITableViewController {
         // Step 3: using the value of the 'global' variable within the scope of this closure
             //print("your captured text is: \(myTextField.text!)")
             
-            self.listElements.append(myTextField.text!)
+            let newItem4 = Item()
+            newItem4.title = myTextField.text!
+            
+            self.listElements.append(newItem4)
             
             // Saving the current state to User Defaults. Add 'self' because you're inside a closure
             self.defaults.set(self.listElements, forKey: "myUpdatedList")
@@ -124,7 +124,7 @@ class ToDoViewController: UITableViewController {
        
             //Step 2: capturing what the user types and storing the value into the 'global' variable, so it will be available outside the scope of this closure
             
-            myTextField = myAlertTextField
+            myTextField.text = myAlertTextField.text!
         }
         // Presenting your alert to the ViewController
         present(myAlert, animated: true, completion: nil)
