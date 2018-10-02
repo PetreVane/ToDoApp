@@ -12,7 +12,7 @@ class ToDoViewController: UITableViewController {
 
     // MARK: - Outlets
     
-    var listElements = ["Grab a beer", "Grab a towel", "Wash your beard"]
+    var listElements = [Item]()
     
     // Creating a UserDefaults() object
     let defaults = UserDefaults()
@@ -22,11 +22,26 @@ class ToDoViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let newItem = Item()
+        newItem.title = "Wash your face"
+        listElements.append(newItem)
+        
+        let newItem2 = Item()
+        newItem2.title = "MAke your bed"
+        listElements.append(newItem2)
+        
+        let newItem3 = Item()
+        newItem3.title = "Have breakfast"
+        listElements.append(newItem3)
+        
+
+        
         // Replacing the listElements with an updated version, retreived from UserDefaults
         
-        if let updatedListElements = defaults.array(forKey: "myUpdatedList") {
-            listElements = updatedListElements as! [String]
-        }
+        
+//        if let updatedListElements = defaults.array(forKey: "myUpdatedList") {
+//            listElements = updatedListElements as! [String]
+//        }
 
         }
 
@@ -51,7 +66,7 @@ class ToDoViewController: UITableViewController {
 
         // Configure the cell...
         
-        cell.textLabel?.text = listElements[indexPath.row]
+        cell.textLabel?.text = listElements[indexPath.row].title
 
         return cell
     }
@@ -65,7 +80,7 @@ class ToDoViewController: UITableViewController {
         
         // printing the content of the cells
         
-        print("Your cell content is: \(listElements[indexPath.row])")
+        print("Your cell content is: \(listElements[indexPath.row].title)")
         
         // Adding a checkmark for each cell
         
