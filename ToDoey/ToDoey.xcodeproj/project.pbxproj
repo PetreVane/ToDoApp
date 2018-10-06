@@ -57,19 +57,19 @@
 			children = (
 				0B7BCEB72160079A00FCFC31 /* Info.plist */,
 				0B7BCEAB2160079900FCFC31 /* AppDelegate.swift */,
-				0BA93FE32163F7A80007C16F /* Model */,
+				0BA93FE32163F7A80007C16F /* Data Model */,
 				0BA93FE52163F7CE0007C16F /* View */,
 				0BA93FE62163F7DF0007C16F /* Controller */,
 			);
 			path = ToDoey;
 			sourceTree = "<group>";
 		};
-		0BA93FE32163F7A80007C16F /* Model */ = {
+		0BA93FE32163F7A80007C16F /* Data Model */ = {
 			isa = PBXGroup;
 			children = (
 				0BA93FE02163F6FE0007C16F /* Item.swift */,
 			);
-			path = Model;
+			path = "Data Model";
 			sourceTree = "<group>";
 		};
 		0BA93FE42163F7C10007C16F /* Supporting files */ = {

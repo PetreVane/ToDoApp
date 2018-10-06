@@ -35,10 +35,10 @@ class ToDoViewController: UITableViewController {
         listElements.append(newItem3)
         
         // Replacing the listElements with an updated version, retreived from UserDefaults
-//
-//        if let updatedListElements = defaults.array(forKey: "myUpdatedList") {
-//            listElements = updatedListElements as! [Item]
-//        }
+
+        if let updatedListElements = defaults.array(forKey: "myUpdatedList") as? [Item] {
+            listElements = updatedListElements
+        }
 
         }
 
@@ -62,8 +62,20 @@ class ToDoViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoCell", for: indexPath)
 
         // Configure the cell...
+        let item = listElements[indexPath.row]
         
-        cell.textLabel?.text = listElements[indexPath.row].title
+        cell.textLabel?.text = item.title
+        
+        // value = condition ? valueIFTrue : valueIFFalse
+        // question ? answer1 : answer2.
+        
+       cell.accessoryType = item.done ? .checkmark : .none
+        
+//        if item.done == true {
+//            cell.accessoryType = .checkmark
+//        } else {
+//            cell.accessoryType = .none
+//        }
 
         return cell
     }
@@ -75,18 +87,27 @@ class ToDoViewController: UITableViewController {
         // making the cell flash one time when selected
         tableView.deselectRow(at: indexPath, animated: true)
         
-        // printing the content of the cells
+     // Toggling the .done property of the cell Object
         
-        print("Your cell content is: \(listElements[indexPath.row].title)")
+//        if listElements[indexPath.row].done == false {
+//            listElements[indexPath.row].done = true
+//        } else {
+//            listElements[indexPath.row].done = false
+//        }
+//
+        // refactoring code
+         listElements[indexPath.row].done = !listElements[indexPath.row].done
         
+        
+        tableView.reloadData()
         // Adding a checkmark for each cell
         
-        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
-            tableView.cellForRow(at: indexPath)?.accessoryType = .none
-        } else {
-            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        }
-        
+//        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
+//            tableView.cellForRow(at: indexPath)?.accessoryType = .none
+//        } else {
+//            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+//        }
+
     }
     
     
