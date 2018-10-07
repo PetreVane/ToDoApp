@@ -20,20 +20,9 @@ class ToDoViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-        let newItem = Item()
-        newItem.title = "Wash your face"
-        listElements.append(newItem)
         
-        let newItem2 = Item()
-        newItem2.title = "MAke your bed"
-        listElements.append(newItem2)
+        loadSavedData()
         
-        let newItem3 = Item()
-        newItem3.title = "Have breakfast"
-        listElements.append(newItem3)
-        
-
         }
 
     
@@ -77,9 +66,10 @@ class ToDoViewController: UITableViewController {
         
      // Toggling the .done property of the cell Object
         // refactoring code
-         listElements[indexPath.row].done = !listElements[indexPath.row].done
         
-        tableView.reloadData()
+        listElements[indexPath.row].done = !listElements[indexPath.row].done
+        saveUpdatedData()
+        
     }
     
     
@@ -98,37 +88,52 @@ class ToDoViewController: UITableViewController {
             newItem.title = localTextField.text!
             self.listElements.append(newItem)
             
-            let encoder = PropertyListEncoder()
-            
-            do {
-                let data = try encoder.encode(self.listElements)
-                try data.write(to: self.dataFilePath!)
-            } catch {
-                print(error)
-            }
-            
+            self.saveUpdatedData()
         }
         
         myAlert.addAction(myAction)
+        
         myAlert.addTextField { (myAlertTextField) in
             myAlertTextField.placeholder = "Type your items here"
             localTextField = myAlertTextField
-            print("Your alert text field is: \(myAlertTextField.text!)")
+            //print("Your alert text field is: \(myAlertTextField.text!)")
         }
         
         
         present(myAlert, animated: true, completion: nil)
-        tableView.reloadData()
         
     }
         
 
     
-    
+    func saveUpdatedData() {
+        
+        let encoder = PropertyListEncoder()
+        do {
+            let data = try encoder.encode(listElements)
+            try data.write(to: dataFilePath!)
+        } catch {
+            print("Your error is: \(error)")
+        }
+        
+        tableView.reloadData()
+    }
     
     
         
-    
+    func loadSavedData(){
+        
+        if let data = try? Data(contentsOf: dataFilePath!) {
+            
+            let decoder = PropertyListDecoder()
+            do {
+                listElements = try decoder.decode([Item].self, from: data)
+            } catch {
+                print("Your decoder error is: \(error)")
+            }
+        }
+        
+    }
         
         
  
