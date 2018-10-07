@@ -50,8 +50,7 @@ class ToDoViewController: UITableViewController {
         cell.textLabel?.text = item.title
         
         // value = condition ? valueIFTrue : valueIFFalse
-        // question ? answer1 : answer2.
-        
+       
        cell.accessoryType = item.done ? .checkmark : .none
         
         return cell
@@ -65,7 +64,7 @@ class ToDoViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         
      // Toggling the .done property of the cell Object
-        // refactoring code
+    // refactoring code
         
         listElements[indexPath.row].done = !listElements[indexPath.row].done
         saveUpdatedData()
@@ -81,9 +80,6 @@ class ToDoViewController: UITableViewController {
        
         let myAction = UIAlertAction(title: "Add Item", style: .default) { (action) in
             
-            // what happens when the button is pressed
-            //print("Add item pressed and your value is: \(localTextField.text!)")
-            
             let newItem = Item()
             newItem.title = localTextField.text!
             self.listElements.append(newItem)
@@ -94,11 +90,10 @@ class ToDoViewController: UITableViewController {
         myAlert.addAction(myAction)
         
         myAlert.addTextField { (myAlertTextField) in
+            
             myAlertTextField.placeholder = "Type your items here"
             localTextField = myAlertTextField
-            //print("Your alert text field is: \(myAlertTextField.text!)")
         }
-        
         
         present(myAlert, animated: true, completion: nil)
         
