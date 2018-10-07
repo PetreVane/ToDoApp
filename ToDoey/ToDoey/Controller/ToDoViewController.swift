@@ -88,12 +88,12 @@ class ToDoViewController: UITableViewController {
     @IBAction func barButtonPressed(_ sender: UIBarButtonItem) {
         
         // Step 1: declaring a placeholder within the scope of the method
-        let globalTextField = UITextField()
+        var globalTextField = UITextField()
         let myAlert = UIAlertController(title: "Add new item on your list", message: "", preferredStyle: .alert)
         let myAction = UIAlertAction(title: "Add item", style: .default) { (action) in
             
         // Step 3: using the value of the 'global' variable within the scope of this closure
-            let newItemTest = Item()
+            var newItemTest = Item()
             newItemTest.title = globalTextField.text!
         
             // Saving the current state to User Defaults.
@@ -112,14 +112,10 @@ class ToDoViewController: UITableViewController {
         // Adding a textfield within the alert
         myAlert.addTextField { (myAlertTextField) in
             myAlertTextField.placeholder = "Bring it to me"
-            if myAlertTextField.text! == "" {
-                print("Your entered text hasn't made it")
-            } else {
-                print("Your text is: \(myAlertTextField.text!)")
-            }
+            print (myAlertTextField.text)
         }
         
-        print("You entered: \(globalTextField.text)")
+        //print("You entered: \(globalTextField.text)")
         
         //Step 2: capturing what the user types and storing the value into the 'global' variable, so it will be available outside the scope of this closure
             
