@@ -36,9 +36,9 @@ class ToDoViewController: UITableViewController {
         
         // Replacing the listElements with an updated version, retreived from UserDefaults
 
-        if let updatedListElements = defaults.array(forKey: "myUpdatedList") as? [Item] {
-            listElements = updatedListElements
-        }
+//        if let updatedListElements = defaults.array(forKey: "myUpdatedList") as? [Item] {
+//            listElements = updatedListElements
+//        }
 
         }
 
@@ -116,6 +116,7 @@ class ToDoViewController: UITableViewController {
         // Step 1: declaring a placeholder within the scope of the method
         let myTextField = UITextField()
         
+        
         let myAlert = UIAlertController(title: "Add new item on your list", message: "", preferredStyle: .alert)
         
         let myAction = UIAlertAction(title: "Add item", style: .default) { (action) in
@@ -124,13 +125,13 @@ class ToDoViewController: UITableViewController {
         // Step 3: using the value of the 'global' variable within the scope of this closure
             //print("your captured text is: \(myTextField.text!)")
             
-            let newItem4 = Item()
+            var newItem4 = Item()
             newItem4.title = myTextField.text!
             
             self.listElements.append(newItem4)
             
             // Saving the current state to User Defaults. Add 'self' because you're inside a closure
-            self.defaults.set(self.listElements, forKey: "myUpdatedList")
+            //self.defaults.set(self.listElements, forKey: "myUpdatedList")
             
             // Reloading table view data
             self.tableView.reloadData()
