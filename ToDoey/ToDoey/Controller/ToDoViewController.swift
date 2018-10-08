@@ -7,21 +7,25 @@
 //
 
 import UIKit
+import CoreData
 
 class ToDoViewController: UITableViewController {
 
-    // MARK: - Outlets
+    // MARK: - Variables & Constants
     
     var listElements = [Item]()
     
     // Creating a UserDefaults() object
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("myCustomItems.plist")
+    
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadSavedData()
+        //loadSavedData()
         
         }
 
@@ -80,8 +84,11 @@ class ToDoViewController: UITableViewController {
        
         let myAction = UIAlertAction(title: "Add Item", style: .default) { (action) in
             
-            let newItem = Item()
+            let newItem = Item(context: self.context)
+            
             newItem.title = localTextField.text!
+            newItem.done = false
+            
             self.listElements.append(newItem)
             
             self.saveUpdatedData()
@@ -103,12 +110,10 @@ class ToDoViewController: UITableViewController {
     
     func saveUpdatedData() {
         
-        let encoder = PropertyListEncoder()
         do {
-            let data = try encoder.encode(listElements)
-            try data.write(to: dataFilePath!)
+            try context.save()
         } catch {
-            print("Your error is: \(error)")
+            print("Error saving context: \(error)")
         }
         
         tableView.reloadData()
@@ -116,26 +121,20 @@ class ToDoViewController: UITableViewController {
     
     
         
-    func loadSavedData(){
-        
-        if let data = try? Data(contentsOf: dataFilePath!) {
-            
-            let decoder = PropertyListDecoder()
-            do {
-                listElements = try decoder.decode([Item].self, from: data)
-            } catch {
-                print("Your decoder error is: \(error)")
-            }
-        }
-        
-    }
-        
-        
- 
-        
-        
-      
-        
+//    func loadSavedData(){
+//
+//        if let data = try? Data(contentsOf: dataFilePath!) {
+//
+//            let decoder = PropertyListDecoder()
+//            do {
+//                listElements = try decoder.decode([Item].self, from: data)
+//            } catch {
+//                print("Your decoder error is: \(error)")
+//            }
+//        }
+//
+//    }
+    
   
         
     }
