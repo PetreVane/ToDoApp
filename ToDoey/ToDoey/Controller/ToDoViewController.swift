@@ -69,10 +69,15 @@ class ToDoViewController: UITableViewController {
         // making the cell flash one time when selected
         tableView.deselectRow(at: indexPath, animated: true)
         
-     // Toggling the .done property of the cell Object
-    // refactoring code
-        
+        // Toggling the .done property of the cell Object
         listElements[indexPath.row].done = !listElements[indexPath.row].done
+        
+        // Testing removing elements from Context first
+        // context.delete(listElements[indexPath.row])
+        
+        // Then removing it from the array
+        // listElements.remove(at: indexPath.row)
+        
         saveUpdatedData()
         
     }
