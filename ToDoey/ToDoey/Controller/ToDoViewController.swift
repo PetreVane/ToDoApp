@@ -16,7 +16,7 @@ class ToDoViewController: UITableViewController {
     var listElements = [Item]()
     
     // Creating a UserDefaults() object
-    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("myCustomItems.plist")
+    let dataBaseFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
@@ -24,8 +24,10 @@ class ToDoViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //let dataBaseFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        //print("Your database filepath is: \(dataBaseFilePath)")
         
-        //loadSavedData()
+        loadSavedData()
         
         }
 
@@ -121,23 +123,23 @@ class ToDoViewController: UITableViewController {
     
     
         
-//    func loadSavedData(){
-//
-//        if let data = try? Data(contentsOf: dataFilePath!) {
-//
-//            let decoder = PropertyListDecoder()
-//            do {
-//                listElements = try decoder.decode([Item].self, from: data)
-//            } catch {
-//                print("Your decoder error is: \(error)")
-//            }
-//        }
-//
-//    }
+    func loadSavedData(){
+        
+        let request: NSFetchRequest<Item> = Item.fetchRequest()
+        
+        do {
+           listElements = try context.fetch(request)
+        } catch {
+            print("Your fetching error is: \(error)")
+        }
+       
+        }
+
+    }
     
   
         
-    }
+
     
     
 
