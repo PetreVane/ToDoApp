@@ -128,7 +128,7 @@ class ToDoViewController: UITableViewController {
     
     
         
-    func loadSavedData(){
+    func loadSavedData(with request: NSFetchRequest<Item> = Item.fetchRequest()){
         
         let request: NSFetchRequest<Item> = Item.fetchRequest()
         
@@ -137,11 +137,34 @@ class ToDoViewController: UITableViewController {
         } catch {
             print("Your fetching error is: \(error)")
         }
-       
+        tableView.reloadData()
         }
 
     }
+
+
+extension ToDoViewController: UISearchBarDelegate {
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        let request: NSFetchRequest<Item> = Item.fetchRequest()
+        let predicate = NSPredicate(format: "title CONTAINS [cd] %@", searchBar.text!)
+        let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
+        
+        request.predicate = predicate
+        request.sortDescriptors = [sortDescriptor]
+        
+        do {
+            listElements = try context.fetch(request)
+        } catch {
+            print("Your fetching error is: \(error)")
+        }
+        
+        
+    }
+    
+    
+}
   
         
 
