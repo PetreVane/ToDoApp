@@ -130,8 +130,6 @@ class ToDoViewController: UITableViewController {
         
     func loadSavedData(with request: NSFetchRequest<Item> = Item.fetchRequest()){
         
-        let request: NSFetchRequest<Item> = Item.fetchRequest()
-        
         do {
            listElements = try context.fetch(request)
         } catch {
@@ -148,23 +146,31 @@ extension ToDoViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         let request: NSFetchRequest<Item> = Item.fetchRequest()
-        let predicate = NSPredicate(format: "title CONTAINS [cd] %@", searchBar.text!)
-        let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
         
-        request.predicate = predicate
-        request.sortDescriptors = [sortDescriptor]
+        request.predicate = NSPredicate(format: "title CONTAINS [cd] %@", searchBar.text!)
+        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
         
-        do {
-            listElements = try context.fetch(request)
-        } catch {
-            print("Your fetching error is: \(error)")
-        }
-        
+       loadSavedData(with: request)
         
     }
     
-    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if searchBar.text?.count == 0 {
+            loadSavedData()
+           
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+                
+            }
+            
+        }
+
 }
+    
+   
+
   
         
 
