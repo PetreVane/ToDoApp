@@ -13,10 +13,10 @@ class ToDoViewController: UITableViewController {
 
     // MARK: - Variables & Constants
     
-    var listElements = [Item]()
+    var itemList = [Item]()
     
     // Creating a UserDefaults() object
-    let dataBaseFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+    //let dataBaseFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
@@ -42,7 +42,7 @@ class ToDoViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return listElements.count
+        return itemList.count
     }
 
     
@@ -51,7 +51,7 @@ class ToDoViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoCell", for: indexPath)
 
         // Configure the cell...
-        let item = listElements[indexPath.row]
+        let item = itemList[indexPath.row]
         
         cell.textLabel?.text = item.title
         
@@ -70,7 +70,7 @@ class ToDoViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         
         // Toggling the .done property of the cell Object
-        listElements[indexPath.row].done = !listElements[indexPath.row].done
+        itemList[indexPath.row].done = !itemList[indexPath.row].done
         
         // Testing removing elements from Context first
         // context.delete(listElements[indexPath.row])
@@ -96,7 +96,7 @@ class ToDoViewController: UITableViewController {
             newItem.title = localTextField.text!
             newItem.done = false
             
-            self.listElements.append(newItem)
+            self.itemList.append(newItem)
             
             self.saveUpdatedData()
         }
@@ -131,7 +131,7 @@ class ToDoViewController: UITableViewController {
     func loadSavedData(with request: NSFetchRequest<Item> = Item.fetchRequest()){
         
         do {
-           listElements = try context.fetch(request)
+           itemList = try context.fetch(request)
         } catch {
             print("Your fetching error is: \(error)")
         }
