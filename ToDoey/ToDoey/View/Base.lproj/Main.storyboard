@@ -32,7 +32,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Category" id="jpc-YE-Fai">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="L9W-TZ-fif"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="L9W-TZ-fif">
+                            <connections>
+                                <action selector="barButtonPressed:" destination="qpY-FJ-3Ll" id="4Gc-6e-4Z7"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <segue destination="ndM-tc-qg2" kind="show" id="GQF-Uh-rzu"/>
@@ -40,7 +44,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bUG-dz-yxY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2057" y="90"/>
+            <point key="canvasLocation" x="-1588" y="90"/>
         </scene>
         <!--Items-->
         <scene sceneID="vvB-R5-mc4">
@@ -86,7 +90,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MKR-uu-C6y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1274" y="90"/>
+            <point key="canvasLocation" x="-642" y="90"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="PUw-r6-ynL">

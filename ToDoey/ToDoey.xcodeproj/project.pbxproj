@@ -93,8 +93,8 @@
 		0BA93FE62163F7DF0007C16F /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				0B7BCEBD2160089E00FCFC31 /* ToDoViewController.swift */,
 				0BD4BD502178F5EB007ED376 /* CategoryViewController.swift */,
+				0B7BCEBD2160089E00FCFC31 /* ToDoViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
