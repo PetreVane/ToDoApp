@@ -47,12 +47,7 @@ class CategoryViewController: UITableViewController {
     }
     
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        // tap animation
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-    }
+    
     
     // MARK: - Alert
     
@@ -112,5 +107,29 @@ class CategoryViewController: UITableViewController {
         
     }
     
+    
+    // Data delegation methods
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        // perform segue
+        performSegue(withIdentifier: "goToItems", sender: self)
+        
+        // tap animation
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // declare a constant that points to the destination of the segue
+        let destinationVC = segue.destination as! ToDoViewController
+        
+        // grabbing the category that coresponds to the selcted cell
+        if let selectedCell = tableView.indexPathForSelectedRow {
+            destinationVC.selectedCategory = categoryList[selectedCell.row]
+            
+        }
+        
+    }
     
 }

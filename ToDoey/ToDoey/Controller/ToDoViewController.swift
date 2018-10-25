@@ -14,6 +14,11 @@ class ToDoViewController: UITableViewController {
     // MARK: - Variables & Constants
     
     var listElements = [Item]()
+    var selectedCategory: Category? {
+        didSet {
+            loadSavedData()
+        }
+    }
     
     // Creating a UserDefaults() object
     let dataBaseFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
@@ -95,6 +100,7 @@ class ToDoViewController: UITableViewController {
             
             newItem.title = localTextField.text!
             newItem.done = false
+            newItem.parentCategory = self.selectedCategory
             
             self.listElements.append(newItem)
             
@@ -128,7 +134,19 @@ class ToDoViewController: UITableViewController {
     
     
         
-    func loadSavedData(with request: NSFetchRequest<Item> = Item.fetchRequest()){
+    func loadSavedData(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil){
+        
+        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
+        
+//        let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, predicate])
+//
+//        request.predicate = compoundPredicate
+        
+        if let additionalPredicate = predicate {
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
+        } else {
+            request.predicate = categoryPredicate
+        }
         
         do {
            listElements = try context.fetch(request)
@@ -147,10 +165,10 @@ extension ToDoViewController: UISearchBarDelegate {
         
         let request: NSFetchRequest<Item> = Item.fetchRequest()
         
-        request.predicate = NSPredicate(format: "title CONTAINS [cd] %@", searchBar.text!)
+        let predicate = NSPredicate(format: "title CONTAINS [cd] %@", searchBar.text!)
         request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
         
-       loadSavedData(with: request)
+       loadSavedData(with: request, predicate: predicate)
         
     }
     
